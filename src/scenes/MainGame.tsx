@@ -43,13 +43,12 @@ export default class MainGame extends Scene {
     // skyVec: vec3 = vec3.fromValues(0, 0, -300);
     time: number = 0; // The time in the scene
     
-    light = {
+  light = {
         diffuse: vec3.fromValues(1,1,1),
         specular: vec3.fromValues(1,1,1),
         ambient: vec3.fromValues(1,1,1),
-        direction: vec3.fromValues(1,1,1)
+        direction: vec3.fromValues(0,-0.02,1)
     };
-
 
     public load(): void {
         this.game.loader.load({
@@ -123,8 +122,7 @@ export default class MainGame extends Scene {
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.depthFunc(this.gl.LEQUAL);
 
-
-        this.objects['ground'] = {
+       this.objects['ground'] = {
             mesh: this.meshes['ground'],
             texture: this.textures['ground'],
             tint: [1, 1, 1, 1],
@@ -132,10 +130,10 @@ export default class MainGame extends Scene {
             Scale: vec3.fromValues(30, 1, 1500),
             ModelMatrix: mat4.create(),
             material: {
-                diffuse: vec3.fromValues(0.251,0.251,0.251),
-                specular: vec3.fromValues(0.796875,0.796875,0.796875),
-                ambient: vec3.fromValues(0.1,0.1,0.1),
-                shininess: 20
+                diffuse: vec3.fromValues(0.5,0.5,0.5),
+                specular: vec3.fromValues(0.4,0.4,0.4),
+                ambient: vec3.fromValues(0.05,0.05,0.05),
+                shininess: 200
             }
         };
                 
@@ -148,7 +146,7 @@ export default class MainGame extends Scene {
             ModelMatrix: mat4.create(),
             material: {
                 diffuse: vec3.fromValues(0.251,0.251,0.251),
-                specular: vec3.fromValues(0.796875,0.796875,0.796875),
+                specular: vec3.fromValues(0.4,0.4,0.4),
                 ambient: vec3.fromValues(0,0,0),
                 shininess: 20
             }
@@ -163,12 +161,12 @@ export default class MainGame extends Scene {
             ModelMatrix: mat4.create(),
             material: {
                 diffuse: vec3.fromValues(0.251,0.251,0.251),
-                specular: vec3.fromValues(0.796875,0.796875,0.796875),
+                specular: vec3.fromValues(0.4,0.4,0.4),
                 ambient: vec3.fromValues(0,0,0),
                 shininess: 20
             }
         };
-                
+                     
         this.objects['moon'] = {
             mesh: this.meshes['moon'],
             texture: this.textures['moon'],
