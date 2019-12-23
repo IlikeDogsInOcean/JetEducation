@@ -1,0 +1,8 @@
+node_modules/
+.cache/
+dist/
+LICENSE.md
+package.json
+package-lock.json
+tsconfig.json
+static/models/
