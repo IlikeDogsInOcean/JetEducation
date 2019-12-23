@@ -45,9 +45,9 @@ export default class SceneMovement {
            {
                 const movement = vec3.create();
                 this.JetXmin = this.objects[key].Position[0] - 2.7;
-                this.JetZmin = this.objects[key].Position[2] + 3.8;
+                this.JetZmin = this.objects[key].Position[2] + 2;
                 this.JetXmax = this.objects[key].Position[0] + 2.7;
-                this.JetZmax = this.objects[key].Position[2] - 3.8;
+                this.JetZmax = this.objects[key].Position[2] - 1;
                 if(this.input.isKeyDown(Key.ArrowRight))
                 { 
                     movement[0] += 1;

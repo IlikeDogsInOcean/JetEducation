@@ -303,7 +303,7 @@ export default class MainGame extends Scene {
             this.program.setUniform3f("material.specular", obj.material.specular);
             this.program.setUniform3f("material.ambient", obj.material.ambient);
             this.program.setUniform1f("material.shininess", obj.material.shininess);
-
+            if(this.collide && key == "Jet") obj.tint = [(Math.sin(this.time) + 1)/2, 0, 0, 1];
             this.program.setUniform4f("tint", obj.tint); // Send the color tint
             this.gl.activeTexture(this.gl.TEXTURE0); // Bind the texture and sampler to unit 0
             this.gl.bindTexture(this.gl.TEXTURE_2D, obj.texture);
