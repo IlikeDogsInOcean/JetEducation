@@ -304,7 +304,7 @@ export default class MainGame extends Scene {
             this.program.setUniform1i('texture_sampler', 0);
             this.gl.bindSampler(0, this.sampler);
             // obj.mesh.draw((key == "Jet-Cube")? this.gl.POINTS:this.gl.TRIANGLES); // Draw the object mesh
-            if(key != "Jet-Cube") obj.mesh.draw(this.gl.TRIANGLES); // Draw the object mesh
+            obj.mesh.draw(this.gl.TRIANGLES); // Draw the object mesh
         }
         
         // this.program2.use();
