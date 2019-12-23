@@ -42,7 +42,8 @@ export default class MainGame extends Scene {
     // JetPosition: vec3 = vec3.fromValues(0, 10, -10);   //The position of the Jet 
     // skyVec: vec3 = vec3.fromValues(0, 0, -300);
     time: number = 0; // The time in the scene
-    
+    Paused: boolean = true; //if mause is clicked to pause
+
   light = {
         diffuse: vec3.fromValues(1,1,1),
         specular: vec3.fromValues(1,1,1),
@@ -295,9 +296,12 @@ export default class MainGame extends Scene {
         // For each object, setup the shader uniforms then draw
         for(let key in this.objects){
             let obj = this.objects[key];
-            if(!this.collide) this.collide = this.sceneMovement.update(deltaTime, key);
-            this.program.setUniformMatrix4fv("M", false, obj.ModelMatrix); // Send the model matrix of the object in the current frame
-
+             if(this.Paused)    //if paused >> then don't update objects
+                   this.Paused=this.sceneMovement.CheckPause();
+            else if(!this.collide) 
+				   this.collide = this.sceneMovement.update(deltaTime, key);
+           
+		    this.program.setUniformMatrix4fv("M", false, obj.ModelMatrix); // Send the model matrix of the object in the current frame
             this.program.setUniformMatrix4fv("M_it", true, mat4.invert(mat4.create(), obj.ModelMatrix));
             this.program.setUniform3f("material.diffuse", obj.material.diffuse);
             this.program.setUniform3f("material.specular", obj.material.specular);

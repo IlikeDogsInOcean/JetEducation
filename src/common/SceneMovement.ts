@@ -212,4 +212,13 @@ export default class SceneMovement {
         return this.Collide;
 
     }
+	
+	//checks if maouse is clicked to unpause the game
+	public CheckPause()
+    {
+        if(this.input.isButtonDown(0))
+        return false;
+        return true;
+    }
+	
 }
