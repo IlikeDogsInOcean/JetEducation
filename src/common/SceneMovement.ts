@@ -197,7 +197,7 @@ export default class SceneMovement {
                 let buildingZmax = this.objects[key].Position[2] - this.objects[key].Scale[2];
                 console.log(buildingXmin, buildingXmax, buildingZmin, buildingZmax);
                 console.log(this.JetXmin, this.JetXmax, this.JetZmin, this.JetZmax);
-                if(((this.JetXmax >=  buildingXmin && this.JetXmin <= buildingXmax) && (this.JetZmax <= buildingZmin && this.JetZmin > buildingZmin)))
+                if(((this.JetXmax >=  buildingXmin && this.JetXmin <= buildingXmax) && (this.JetZmax <= buildingZmin && this.JetZmin >= buildingZmax)))
                 {
                     this.Collide = true;
                     return this.Collide;
