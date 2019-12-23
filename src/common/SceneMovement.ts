@@ -187,7 +187,7 @@ export default class SceneMovement {
                 if(this.objects[key].Position[2] == 10) 
                 {
                     mat4.translate(temp, temp,[0,0,-2010]); 
-                    this.objects[key].Position[2] = -2000
+                    this.objects[key].Position[2] = -1000;
                 }
                 mat4.scale(temp, temp, this.objects[key].Scale);
                 this.objects[key].ModelMatrix = mat4.clone(temp);            
@@ -197,7 +197,7 @@ export default class SceneMovement {
                 let buildingZmax = this.objects[key].Position[2] - this.objects[key].Scale[2];
                 console.log(buildingXmin, buildingXmax, buildingZmin, buildingZmax);
                 console.log(this.JetXmin, this.JetXmax, this.JetZmin, this.JetZmax);
-                if(((this.JetXmax >=  buildingXmin && this.JetXmin < buildingXmax) && (this.JetZmax < buildingZmin && this.JetZmin < buildingZmax)))
+                if(((this.JetXmax >=  buildingXmin && this.JetXmin <= buildingXmax) && (this.JetZmax <= buildingZmin && this.JetZmin > buildingZmin)))
                 {
                     this.Collide = true;
                     return this.Collide;

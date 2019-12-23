@@ -197,20 +197,20 @@ export default class MainGame extends Scene {
             }
         };
 
-        this.objects['skyscraper'] = {
-            mesh: this.meshes['skyscraper'],
-            texture: this.textures['skyscraper'],
-            tint: [1,1,1,1],
-            Position: vec3.fromValues(0,0,-300),
-            Scale: vec3.fromValues(5,35,5),
-            ModelMatrix: mat4.create(),
-            material: {
-                diffuse: vec3.fromValues(0.1,0.1,0.1),
-                specular: vec3.fromValues(0.5,0.5,0.5),
-                ambient: vec3.fromValues(0,0,0),
-                shininess: 2
-            }
-        };
+        // this.objects['skyscraper'] = {
+        //     mesh: this.meshes['skyscraper'],
+        //     texture: this.textures['skyscraper'],
+        //     tint: [1,1,1,1],
+        //     Position: vec3.fromValues(Math.random()*30,0,-300),
+        //     Scale: vec3.fromValues(5,35,5),
+        //     ModelMatrix: mat4.create(),
+        //     material: {
+        //         diffuse: vec3.fromValues(0.1,0.1,0.1),
+        //         specular: vec3.fromValues(0.5,0.5,0.5),
+        //         ambient: vec3.fromValues(0,0,0),
+        //         shininess: 2
+        //     }
+        // };
 
         // this.objects['Jet-Cube'] = {
         //     mesh: this.meshes['Jet-Cube'],
@@ -227,24 +227,30 @@ export default class MainGame extends Scene {
         //     }
         // };
         //generating skyscrapers
-        // for (let i = 0; i < 9; i++) {
-        //     this.objects['skyscraper' + i.toString()] = {
-        //         mesh: this.meshes['skyscraper'],
-        //         texture: this.textures['skyscraper'],
-        //         tint: [1,1,1,1],
-        //         Position:vec3.fromValues(0,0,0),
-        //         Scale: vec3.fromValues(5, 35, 5),
-        //         ModelMatrix: mat4.create(),
-        //         material: {
-        //             diffuse: vec3.fromValues(0.1,0.1,0.1),
-        //             specular: vec3.fromValues(0.5,0.5,0.5),
-        //             ambient: vec3.fromValues(0,0,0),
-        //             shininess: 2
-        //         }
+        for (let i = 0; i < 24; i++) {
+            let j = Math.floor(Math.random()*10);
 
-        //     }
+            this.objects['skyscraper' + i.toString()] = {
+                mesh: this.meshes['skyscraper'],
+                texture: this.textures['skyscraper'],
+                tint: [1,1,1,1],
+                Position:vec3.fromValues(Math.pow(-1, j)*27*Math.random(),0,-130*i-500),
+                Scale: vec3.fromValues(5, 35, 5),
+                ModelMatrix: mat4.create(),
+                material: {
+                    diffuse: vec3.fromValues(0.1,0.1,0.1),
+                    specular: vec3.fromValues(0.5,0.5,0.5),
+                    ambient: vec3.fromValues(0,0,0),
+                    shininess: 2
+                }
+
+            }
             
-        // }
+
+            
+            
+        }
+       
 
         for(let key in this.objects){
             let obj = this.objects[key];
