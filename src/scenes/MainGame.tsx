@@ -227,7 +227,7 @@ export default class MainGame extends Scene {
         //     }
         // };
         //generating skyscrapers
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 9; i++) {
             let j = Math.floor(Math.random()*10);
 
             this.objects['skyscraper' + i.toString()] = {

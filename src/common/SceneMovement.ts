@@ -175,22 +175,25 @@ export default class SceneMovement {
         }
         else
         {
-            for (let i = 0; i < 10; i++) 
+            for (let i = 0; i < 8; i++) 
             {
                 const movement = vec3.create();
                 movement[2] = 1;
 
-                const temp = mat4.create();
-                mat4.scale(temp, this.objects[key].ModelMatrix, vec3.inverse(vec3.create(), this.objects[key].Scale));    
+                mat4.scale(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, vec3.inverse(vec3.create(), this.objects[key].Scale));    
                 this.objects[key].Position[2] += movement[2];
-                mat4.translate(temp, temp,movement);
-                if(this.objects[key].Position[2] == 10) 
+                mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+
+                /////////////////////////////////////////Modify Here/////////////////////////////////////////////////
+                if(this.objects[key].Position[2] >= 10) 
                 {
-                    mat4.translate(temp, temp,[0,0,-2010]); 
-                    this.objects[key].Position[2] = -1000;
+                    mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,[0,0,-510]); 
+                    this.objects[key].Position[2] = -500;
                 }
-                mat4.scale(temp, temp, this.objects[key].Scale);
-                this.objects[key].ModelMatrix = mat4.clone(temp);            
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                
+                mat4.scale(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, this.objects[key].Scale);
+
                 let buildingXmin = this.objects[key].Position[0] - this.objects[key].Scale[0];
                 let buildingZmin = this.objects[key].Position[2] + this.objects[key].Scale[2];
                 let buildingXmax = this.objects[key].Position[0] + this.objects[key].Scale[0];
