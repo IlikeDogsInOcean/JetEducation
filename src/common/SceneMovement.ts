@@ -30,6 +30,8 @@ export default class SceneMovement {
     JetZmin: number;
     JetXmax: number;
     JetZmax: number;
+    rotateDir: number =-1; // 0 rotated to left ,1 rotated to right , -1 isn't rotated 
+
     constructor(objects: {[name: string]: Object3D}, input: Input){
         this.objects = objects;
         this.input = input;
@@ -38,25 +40,101 @@ export default class SceneMovement {
         
 
 
-        if(key == "Jet")
-        {
-            const movement = vec3.create();
-            if(this.input.isKeyDown(Key.ArrowRight)) movement[0] += 1;
-            if(this.input.isKeyDown(Key.ArrowLeft)) movement[0] -= 1;
-
-            vec3.normalize(movement, movement);
-            movement[0] = 2*this.fastMovementSensitivity * deltaTime * movement[0];
-            const temp = vec3.create();
-            vec3.add(temp, this.objects[key].Position, movement);
-            if(temp[0] > 30 || temp[0] <-30)    return;
-            this.objects[key].Position[0] = temp[0];
-            movement[0] = -movement[0];
-            mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
-            this.JetXmin = this.objects[key].Position[0] - 2.7;
-            this.JetZmin = this.objects[key].Position[2] + 3.8;
-            this.JetXmax = this.objects[key].Position[0] + 2.7;
-            this.JetZmax = this.objects[key].Position[2] - 3.8;
-        }
+           //-------------------------------------------------jet contorller---------------------------------------------
+           if(key == "Jet")
+           {
+               const movement = vec3.create();
+               if(this.input.isKeyDown(Key.ArrowRight)){ movement[0] += 1;
+                   vec3.normalize(movement, movement);
+                   movement[0] = this.fastMovementSensitivity * deltaTime * movement[0];
+                   const temp = vec3.create();
+                   vec3.add(temp, this.objects[key].Position, movement);
+                   if(temp[0] > 30 || temp[0] <-30)    return;
+                   this.objects[key].Position[0] = temp[0];
+                   movement[0] = -movement[0];
+                     if(this.rotateDir!=1)//if not rotated right then rotate right 
+                     {
+                         //check if rotated left rotate 60 else rotate 30
+                         if(this.rotateDir==0)
+                           {
+                               mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+                               //rotate by 60
+                               mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, -Math.PI/3, [0,0,-1]);
+                           }
+                         else{
+                               mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+                               //rotate by 30
+                               mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, -Math.PI/6, [0,0,-1]);                             
+                         }         
+                       this.rotateDir=1; 
+                     }
+                     else 
+                     {
+                         if(this.rotateDir==1)
+                         {
+                               mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, Math.PI/6, [0,0,-1]);
+                               mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+                               mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, -Math.PI/6, [0,0,-1]);
+                         }
+                         else {
+                               //just translate
+                               mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+                           }       
+                     }
+                   }
+               else if(this.input.isKeyDown(Key.ArrowLeft)) {movement[0] -= 1;         
+                   vec3.normalize(movement, movement);
+                   movement[0] = this.fastMovementSensitivity * deltaTime * movement[0];
+                   const temp = vec3.create();
+                   vec3.add(temp, this.objects[key].Position, movement);
+                   if(temp[0] > 30 || temp[0] <-30)    return;
+                   this.objects[key].Position[0] = temp[0];
+                   movement[0] = -movement[0];
+                   if(this.rotateDir!=0)//if not rotated left then rotate left 
+                   {
+                       //check if rotated right rotate 60 else rotate 30
+                       if(this.rotateDir==1)
+                       {
+                           mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+                           //rotate by 60
+                           mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, Math.PI/3, [0,0,-1]);
+                           }
+                           else{
+                               mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+                               //rotate by 30
+                               mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, Math.PI/6, [0,0,-1]);
+                           }
+                     this.rotateDir=0; 
+                   }
+                   else 
+                   {
+                       if(this.rotateDir==0)
+                         {    
+                               mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, -Math.PI/6, [0,0,-1]);
+                               mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+                               mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, Math.PI/6, [0,0,-1]);
+                         }
+                         else {
+                               //just translate
+                               mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
+                           }       
+                   }
+               }
+               else{
+                   //if rotated right rotate back else if rotated left rotate back 
+                   if(this.rotateDir==1)
+                   {
+                       mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, Math.PI/6, [0,0,-1]);
+                   }
+                   else if(this.rotateDir==0) //if rotated to left
+                   {  //rotate right by 30
+                       mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, -Math.PI/6, [0,0,-1]);
+                   }
+                   this.rotateDir =-1; 
+               }            
+           }
+           //-----------------------------------------------------------------------------------------------------------
+   
         else if(key == "moon")
         {
             mat4.rotate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, -Math.PI/10000 * deltaTime, [0,1,0]);
