@@ -41,7 +41,7 @@ export default class MainGame extends Scene {
     objects: {[name: string]: Object3D} = {}; // This will hold all our 3D objects
     time: number = 0; // The time in the scene
     Paused: boolean = true; //if mause is clicked to pause
-
+    xPositions: [-25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25];
   light = {
         diffuse: vec3.fromValues(1,1,1),
         specular: vec3.fromValues(1,1,1),
@@ -210,15 +210,18 @@ export default class MainGame extends Scene {
         //         shininess: 2
         //     }
         // };
+        let xPositions :number[];
+        xPositions = [-15, 25, -5, 15,  5, -25];
+     
         //generating skyscrapers
-        for (let i = 0; i < 8; i++) {
-            let j = Math.floor(Math.random()*10);
+        for (let i = 0; i < 11; i++) {
+            let j = Math.floor(Math.random()*6);
 
             this.objects['skyscraper' + i.toString()] = {
                 mesh: this.meshes['skyscraper'],
                 texture: this.textures['skyscraper'],
                 tint: [1,1,1,1],
-                Position:vec3.fromValues(Math.pow(-1, j)*27*Math.random(),0,-130*i-300),
+                Position:vec3.fromValues(xPositions[j],0,-50*i-200),
                 Scale: vec3.fromValues(5, 35, 5),
                 ModelMatrix: mat4.create(),
                 material: {

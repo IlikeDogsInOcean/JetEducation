@@ -47,7 +47,7 @@ export default class SceneMovement {
                 this.JetXmin = this.objects[key].Position[0] - 2.7;
                 this.JetZmin = this.objects[key].Position[2] + 2;
                 this.JetXmax = this.objects[key].Position[0] + 2.7;
-                this.JetZmax = this.objects[key].Position[2] - 1;
+                this.JetZmax = this.objects[key].Position[2] - 0.5;
                 if(this.input.isKeyDown(Key.ArrowRight))
                 { 
                     movement[0] += 1;
@@ -175,7 +175,7 @@ export default class SceneMovement {
         }
         else
         {
-            for (let i = 0; i < 7; i++) 
+            for (let i = 0; i < 8; i++) 
             {
                 const movement = vec3.create();
                 movement[2] = 1;
@@ -186,9 +186,12 @@ export default class SceneMovement {
 
                 if(this.objects[key].Position[2] >= 10) 
                 {
-                    mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,[-2*this.objects[key].Position[0],0,-510]); 
+                    let xPositions :number[];
+                    xPositions = [-15, 25, -5, 15,  5, -25];
+                    let j = Math.floor(Math.random()*6);
+                    mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,[xPositions[j]-this.objects[key].Position[0],0,-510]); 
                     this.objects[key].Position[2] = -500;
-                    this.objects[key].Position[0] = -this.objects[key].Position[0];
+                    this.objects[key].Position[0] = xPositions[j];
                 }
                 
                 mat4.scale(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, this.objects[key].Scale);
