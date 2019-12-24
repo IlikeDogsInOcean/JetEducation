@@ -198,21 +198,6 @@ export default class MainGame extends Scene {
             }
         };
 
-        // this.objects['skyscraper'] = {
-        //     mesh: this.meshes['skyscraper'],
-        //     texture: this.textures['skyscraper'],
-        //     tint: [1,1,1,1],
-        //     Position: vec3.fromValues(Math.random()*30,0,-300),
-        //     Scale: vec3.fromValues(5,35,5),
-        //     ModelMatrix: mat4.create(),
-        //     material: {
-        //         diffuse: vec3.fromValues(0.1,0.1,0.1),
-        //         specular: vec3.fromValues(0.5,0.5,0.5),
-        //         ambient: vec3.fromValues(0,0,0),
-        //         shininess: 2
-        //     }
-        // };
-
         // this.objects['Jet-Cube'] = {
         //     mesh: this.meshes['Jet-Cube'],
         //     texture: this.textures['skyscraper'],
@@ -228,14 +213,14 @@ export default class MainGame extends Scene {
         //     }
         // };
         //generating skyscrapers
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < 8; i++) {
             let j = Math.floor(Math.random()*10);
 
             this.objects['skyscraper' + i.toString()] = {
                 mesh: this.meshes['skyscraper'],
                 texture: this.textures['skyscraper'],
                 tint: [1,1,1,1],
-                Position:vec3.fromValues(Math.pow(-1, j)*27*Math.random(),0,-130*i-500),
+                Position:vec3.fromValues(Math.pow(-1, j)*27*Math.random(),0,-130*i-300),
                 Scale: vec3.fromValues(5, 35, 5),
                 ModelMatrix: mat4.create(),
                 material: {
@@ -301,6 +286,8 @@ export default class MainGame extends Scene {
             else if(!this.collide) 
 				   this.collide = this.sceneMovement.update(deltaTime, key);
            
+            if(this.game.input.isKeyDown(Key.Escape))
+                this.Paused = true;       
 		    this.program.setUniformMatrix4fv("M", false, obj.ModelMatrix); // Send the model matrix of the object in the current frame
             this.program.setUniformMatrix4fv("M_it", true, mat4.invert(mat4.create(), obj.ModelMatrix));
             this.program.setUniform3f("material.diffuse", obj.material.diffuse);

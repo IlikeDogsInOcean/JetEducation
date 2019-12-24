@@ -175,7 +175,7 @@ export default class SceneMovement {
         }
         else
         {
-            for (let i = 0; i < 8; i++) 
+            for (let i = 0; i < 7; i++) 
             {
                 const movement = vec3.create();
                 movement[2] = 1;
@@ -184,13 +184,12 @@ export default class SceneMovement {
                 this.objects[key].Position[2] += movement[2];
                 mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,movement);
 
-                /////////////////////////////////////////Modify Here/////////////////////////////////////////////////
                 if(this.objects[key].Position[2] >= 10) 
                 {
-                    mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,[0,0,-510]); 
+                    mat4.translate(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix,[-2*this.objects[key].Position[0],0,-510]); 
                     this.objects[key].Position[2] = -500;
+                    this.objects[key].Position[0] = -this.objects[key].Position[0];
                 }
-                ////////////////////////////////////////////////////////////////////////////////////////////////
                 
                 mat4.scale(this.objects[key].ModelMatrix, this.objects[key].ModelMatrix, this.objects[key].Scale);
 
@@ -216,7 +215,7 @@ export default class SceneMovement {
 	//checks if maouse is clicked to unpause the game
 	public CheckPause()
     {
-        if(this.input.isButtonDown(0))
+        if(this.input.isButtonDown(0) || this.input.isKeyDown(Key.Enter))
         return false;
         return true;
     }
