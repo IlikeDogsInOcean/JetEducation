@@ -39,8 +39,6 @@ export default class MainGame extends Scene {
     sceneMovement: SceneMovement;
     collide: boolean = false;
     objects: {[name: string]: Object3D} = {}; // This will hold all our 3D objects
-    // JetPosition: vec3 = vec3.fromValues(0, 10, -10);   //The position of the Jet 
-    // skyVec: vec3 = vec3.fromValues(0, 0, -300);
     time: number = 0; // The time in the scene
     Paused: boolean = true; //if mause is clicked to pause
 
@@ -294,7 +292,10 @@ export default class MainGame extends Scene {
             this.program.setUniform3f("material.specular", obj.material.specular);
             this.program.setUniform3f("material.ambient", obj.material.ambient);
             this.program.setUniform1f("material.shininess", obj.material.shininess);
+
             if(this.collide && key == "Jet") obj.tint = [(Math.sin(this.time) + 1)/2, 0, 0, 1];
+           
+            
             this.program.setUniform4f("tint", obj.tint); // Send the color tint
             this.gl.activeTexture(this.gl.TEXTURE0); // Bind the texture and sampler to unit 0
             this.gl.bindTexture(this.gl.TEXTURE_2D, obj.texture);
@@ -303,7 +304,13 @@ export default class MainGame extends Scene {
             // obj.mesh.draw((key == "Jet-Cube")? this.gl.POINTS:this.gl.TRIANGLES); // Draw the object mesh
             obj.mesh.draw(this.gl.TRIANGLES); // Draw the object mesh
         }
-        
+        if(this.collide && this.game.input.isKeyDown(Key.Enter)) {
+            this.time = 0;
+            this.Paused = true;
+            this.collide = false;
+            this.game.nextScene = this;
+            return;
+        }
         // this.program2.use();
         // let MVP = mat4.clone(this.camera.ViewProjectionMatrix);
         // mat4.mul(MVP, MVP, this.objects["Jet-Cube"].ModelMatrix);

@@ -197,8 +197,8 @@ export default class SceneMovement {
                 let buildingZmin = this.objects[key].Position[2] + this.objects[key].Scale[2];
                 let buildingXmax = this.objects[key].Position[0] + this.objects[key].Scale[0];
                 let buildingZmax = this.objects[key].Position[2] - this.objects[key].Scale[2];
-                console.log(buildingXmin, buildingXmax, buildingZmin, buildingZmax);
-                console.log(this.JetXmin, this.JetXmax, this.JetZmin, this.JetZmax);
+                // console.log(buildingXmin, buildingXmax, buildingZmin, buildingZmax);
+                // console.log(this.JetXmin, this.JetXmax, this.JetZmin, this.JetZmax);
                 if(((this.JetXmax >=  buildingXmin && this.JetXmin <= buildingXmax) && (this.JetZmax <= buildingZmin && this.JetZmin >= buildingZmax)))
                 {
                     this.Collide = true;
@@ -215,7 +215,7 @@ export default class SceneMovement {
 	//checks if maouse is clicked to unpause the game
 	public CheckPause()
     {
-        if(this.input.isButtonDown(0) || this.input.isKeyDown(Key.Enter))
+        if(this.input.isButtonDown(0))
         return false;
         return true;
     }
